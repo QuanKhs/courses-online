@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/QuanKhs/nodejs-learning.git"
+    "url": "git+https://github.com/QuanKhs/courses-online.git"
   },
   "keywords": [
     "nodejs",
@@ -19,9 +19,9 @@
   "author": "QuanKhs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/QuanKhs/nodejs-learning/issues"
+    "url": "https://github.com/QuanKhs/courses-online/issues"
   },
-  "homepage": "https://github.com/QuanKhs/nodejs-learning#readme",
+  "homepage": "https://github.com/QuanKhs/courses-online#readme",
   "lint-staged": {
     "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
