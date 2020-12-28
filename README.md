@@ -1,2 +1,2 @@
 # Learning nodejs with Express web framework
-### Create basic website using MERN stack
+### Create basic __ONLINE COURSES__ using MERN stack
