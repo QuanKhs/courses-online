@@ -1,14 +1,21 @@
-class SiteController{
-    
+const Course = require('../models/Course');
+
+class SiteController {
     //GET /home
-    index(req, res){
-        res.render('home');
+    index(req, res) {
+        Course.find({}, function (err, courses) {
+            if (!err) {
+                res.json(courses);
+                return;
+            }
+            res.status(400).json({ error: 'ERROR!' });
+        });
+        // res.render('home');
     }
 
-    
-    search(req, res){
+    search(req, res) {
         res.render('search');
     }
 }
 
-module.exports = new SiteController;
+module.exports = new SiteController();

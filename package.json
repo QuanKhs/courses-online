@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "LearnNodeJs",
   "main": "src/index.js",
-  "scripts": {  
+  "scripts": {
     "start": "nodemon --inspect src/index.js",
     "watch": "node-sass --watch src/resources/scss/ --output src/public/css/",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,9 +19,9 @@
   "author": "QuanKhs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/QuanKhs/nodejs_blog/issues"
+    "url": "https://github.com/QuanKhs/nodejs-learning/issues"
   },
-  "homepage": "https://github.com/QuanKhs/nodejs_blog#readme",
+  "homepage": "https://github.com/QuanKhs/nodejs-learning#readme",
   "lint-staged": {
     "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
   },
@@ -32,11 +32,13 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.2.0"
+    "express-handlebars": "^5.2.0",
+    "mongoose": "^5.11.8"
   },
   "devDependencies": {
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
+    "morgan": "^1.10.0",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.6",
     "prettier": "^2.2.1"
