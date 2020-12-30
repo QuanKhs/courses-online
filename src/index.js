@@ -7,7 +7,7 @@ const port = 3000;
 const route = require('./routes');
 const db = require('./config/db');
 const morgan = require('morgan');
-
+const methodOverride = require('method-override');
 //Connect to DB
 db.connect();
 
@@ -20,8 +20,15 @@ app.engine(
     'hbs',
     handlebars({
         extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b,
+        },
     }),
 );
+
+// override with the X-HTTP-Method-Override header in the request
+app.use(methodOverride('_method'));
+
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 

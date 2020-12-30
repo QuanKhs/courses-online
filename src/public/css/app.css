@@ -1,5 +1,12 @@
-h1 {
-  color: red; }
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box; }
 
-h2 {
-  color: blue; }
+img {
+  width: 100%; }
+
+.card {
+  padding: 0;
+  margin: 15px 13px;
+  max-width: 31%; }
