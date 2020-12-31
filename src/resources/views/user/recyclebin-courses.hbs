@@ -8,7 +8,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Course Name</th>
-                <th scope="col">Create Time</th>
+                <th scope="col">Delete Time</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -17,7 +17,7 @@
             <tr>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
-                <td>{{this.createdAt}}</td>
+                <td>{{this.deletedAt}}</td>
                 <td>
                     <a href="" class="btn btn-primary btn-restore" data-id="{{this._id}}">Restore</a>
                     <a href="" class="btn btn-primary my-2" data-toggle="modal" data-target="#deleteConfirm"
