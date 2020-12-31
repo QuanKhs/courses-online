@@ -1,10 +1,6 @@
-<div class="mt-4">
+<div class="my-4">
     <div>
-        <div class="title-header d-flex justify-content-between">
-            <h2>My Courses</h2>
-            <a href="/user/recyclebin/courses" class="btn btn-outline-dark mr-4">Recycle Bin</a>
-        </div>
-        
+        <h2>Courses deleted</h2>
     </div>
 
     <table class="table mt-5">
@@ -13,9 +9,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Course Name</th>
                 <th scope="col">Create Time</th>
-                <th scope="col">
-                    <button class="btn btn-success"><a href="/courses/create" style="text-decoration: none; color:white;">Create Course</a></button>
-                </th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +19,8 @@
                 <td>{{this.name}}</td>
                 <td>{{this.createdAt}}</td>
                 <td>
-                    <a href="/courses/{{this._id}}/edit" class="btn btn-primary">Edit</a>
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#deleteConfirm"
+                    <a href="" class="btn btn-primary btn-restore" data-id="{{this._id}}">Restore</a>
+                    <a href="" class="btn btn-primary my-2" data-toggle="modal" data-target="#deleteConfirm"
                         data-id="{{this._id}}">Delete</a>
                 </td>
             </tr>
@@ -34,28 +28,31 @@
             {{else}}
             <tr>
                 <td colspan="5" class="text-center">
-                    No Courses Yet.
-                    <a href="/courses/create">Create Course Here</a>
+                    Recycle Bin is empty.
                 </td>
             </tr>
             {{/each}}
+            <tr>
+                <td colspan="5" class="text-center">
+                    <a href="/user/stored/courses" class="btn btn-success">Back to Courses List</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="deleteConfirm" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Delete Course</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Action cannot be restored!</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Do you really want to delete this course ?
+                Do you really want to permanently delete this course ?
             </div>
             <div class="modal-footer">
                 <button type="button" id="btnDeleteCourse" class="btn btn-success">Delete</button>
@@ -66,11 +63,15 @@
 </div>
 
 <form name="btnDeleteCourse" method="POST"></form>
+<form name="btnRestoreCourse" method="POST"></form>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         var courseID;
         const deleteForm = document.forms['btnDeleteCourse'];
+        const restoreForm = document.forms['btnRestoreCourse'];
+
+        const restoreBin = $('.btn-restore');
 
         $('#deleteConfirm').on('show.bs.modal', (event) => {
             const button = $(event.relatedTarget);
@@ -79,8 +80,16 @@
 
         const btnDel = document.getElementById('btnDeleteCourse');
         btnDel.onclick = () => {
-            deleteForm.action = '/courses/' + courseID + '?_method=DELETE';
+            deleteForm.action = '/courses/' + courseID + '/destroy?_method=DELETE';
             deleteForm.submit();
-        }
+        };
+
+        restoreBin.click(function (event) {
+            event.preventDefault();
+
+            let iD = $(this).data('id');
+            restoreForm.action = '/courses/' + iD + '/restore?_method=PATCH';
+            restoreForm.submit();
+        })
     });
 </script>

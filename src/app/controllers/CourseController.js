@@ -18,13 +18,13 @@ class CourseController {
     }
     // [POST] /courses/store
     store(req, res, next) {
-        const formData = req.body;
+        const formData = { ...req.body };
         formData.image = `http://i3.ytimg.com/vi/${req.body.videoID}/maxresdefault.jpg`;
         const course = new Course(formData);
 
         course
             .save()
-            .then(() => res.redirect('/'))
+            .then(() => res.redirect('/user/stored/courses'))
             .catch((error) => {});
     }
 
@@ -42,6 +42,27 @@ class CourseController {
     update(req, res, next) {
         Course.updateOne({ _id: req.params.id }, req.body)
             .then(() => res.redirect('/user/stored/courses'))
+            .catch(next);
+    }
+
+    // [DELETE] /courses/:id
+    delete(req, res, next) {
+        Course.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    // [PATCH] /courses/:id/restore
+    restore(req, res, next) {
+        Course.restore({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    // [DELETE] /courses/:id/destroy
+    destroy(req, res, next) {
+        Course.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
             .catch(next);
     }
 }

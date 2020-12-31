@@ -12,6 +12,17 @@ class UserController {
             )
             .catch(next);
     }
+
+    // [GET] user/recyclebin/courses
+    recycleBin(req, res, next) {
+        Course.findDeleted({})
+            .then((courses) =>
+                res.render('user/recyclebin-courses', {
+                    courses: multipleMongooseToObject(courses),
+                }),
+            )
+            .catch(next);
+    }
 }
 
 module.exports = new UserController();
