@@ -28,11 +28,9 @@
                 <th scope="col">#</th>
                 <th scope="col">
                     Course Name
-                    <a href="?_sort&column=name&type=desc">
-                        <i class="fa fa-sort"></i>
-                    </a>
+                    {{{sortable 'name' _sort}}}
                 </th>
-                <th scope="col">Create Time</th>
+                <th scope="col">Create Time {{{sortable 'createdAt' _sort}}}</th>
                 <th scope="col">
                     <button class="btn btn-success"><a href="/courses/create"
                             style="text-decoration: none; color:white;">Create Course</a></button>
