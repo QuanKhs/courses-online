@@ -1,16 +1,16 @@
-<div class="mt-4">
+<form class="mt-4" name="container-form" method="POST" action="/courses/handle-form-actions">
     <div>
         <div class="title-header d-flex justify-content-between">
             <h2>My Courses</h2>
-            <a href="/user/recyclebin/courses" class="btn btn-outline-dark mr-4">Recycle Bin ({{deleteCount}})</a>
+            <a href="/user/recyclebin/courses" class="btn btn-dark mr-4"> Recycle Bin ({{deleteCount}})</a>
         </div>
     </div>
     <div class="mt-4 d-flex align-items-center ">
-        <div class="form-check ml-3">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Choose All</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkAll">
+            <label class="form-check-label" for="checkAll">Choose All</label>
         </div>
-        <select class="form-control form-control-sm w-25 mx-3" id="">
+        <select class="form-control form-control-sm w-25 mx-3" name="action">
             <option value="delete">Delete</option>
             <option>2</option>
             <option>3</option>
@@ -18,7 +18,7 @@
             <option>5</option>
         </select>
 
-        <button type="button" class="btn btn-primary disabled">Confirm</button>
+        <button class="btn btn-primary btn-checked-all-submit" disabled>Confirm</button>
     </div>
 
     <table class="table mt-5 table-hover ">
@@ -26,7 +26,12 @@
             <tr>
                 <th></th>
                 <th scope="col">#</th>
-                <th scope="col">Course Name</th>
+                <th scope="col">
+                    Course Name
+                    <a href="?_sort&column=name&type=desc">
+                        <i class="fa fa-sort"></i>
+                    </a>
+                </th>
                 <th scope="col">Create Time</th>
                 <th scope="col">
                     <button class="btn btn-success"><a href="/courses/create"
@@ -61,7 +66,7 @@
             {{/each}}
         </tbody>
     </table>
-</div>
+</form>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteConfirm" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -89,18 +94,63 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        var courseID;
+        let courseID;
         const deleteForm = document.forms['btnDeleteCourse'];
+        const containerForm = document.forms['container-form'];
+        const checkAll = $('#checkAll');
+        const courseItemCheck = $('input[name="courseIds[]"]');
+        const checkAllSubmit = $('.btn-checked-all-submit');
 
+        // When dialog confirm clicked
         $('#deleteConfirm').on('show.bs.modal', (event) => {
             const button = $(event.relatedTarget);
             courseID = button.data('id');
         });
 
+        //when delete course btn clicked
         const btnDel = document.getElementById('btnDeleteCourse');
         btnDel.onclick = () => {
             deleteForm.action = '/courses/' + courseID + '?_method=DELETE';
             deleteForm.submit();
         }
+
+        //checkAll changed
+        checkAll.change(function () {
+            let isCheckedAll = $(this).prop('checked');
+            courseItemCheck.prop('checked', isCheckedAll);
+
+            renderCheckAllBtnSubmit();
+        });
+
+        //courses Item checkbox changed
+        courseItemCheck.change(function () {
+            let isCheckedAll = courseItemCheck.length === $('input[name="courseIds[]"]:checked').length;
+            checkAll.prop('checked', isCheckedAll);
+
+            renderCheckAllBtnSubmit();
+        });
+
+        //check all submit clicked
+        checkAllSubmit.click(function (e) {
+            e.preventDefault();
+            const isSubmittable = !$(this).hasClass('disabled');
+
+            if (isSubmittable) {
+                containerForm.submit();
+            }
+        });
+
+        //render check all submit
+        const renderCheckAllBtnSubmit = () => {
+            const checkedCount = $('input[name="courseIds[]"]:checked').length;
+
+            if (checkedCount) {
+                checkAllSubmit.attr('disabled', false);
+            } else {
+                checkAllSubmit.attr('disabled', true);
+            }
+        };
+
+        //console.log(containerForm);
     });
 </script>
