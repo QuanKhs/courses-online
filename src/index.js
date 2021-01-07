@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const handlebars = require('express-handlebars');
-const SortMiddleware = require('./app/middlewares/SortMiddleware');
+const SortMiddleware = require('./app/middlewares/sortMiddleware');
 
 const app = express();
 const port = 3000;
