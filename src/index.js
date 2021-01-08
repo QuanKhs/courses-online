@@ -25,36 +25,14 @@ app.engine(
     'hbs',
     handlebars({
         extname: '.hbs',
-        helpers: {
-            sum: (a, b) => a + b,
-            sortable: (field, sort) => {
-                const sortType = field === sort.column ? sort.type : 'default';
-
-                const icons = {
-                    default: 'fa fa-sort',
-                    asc: 'fa fa-sort-amount-down',
-                    desc: 'fa fa-sort-amount-up',
-                };
-                const types = {
-                    default: 'desc',
-                    asc: 'desc',
-                    desc: 'asc',
-                };
-
-                const icon = icons[sortType];
-                const type = types[sortType];
-
-                return `<a href="?_sort&column=${field}&type=${type}">
-                            <i class="${icon}"></i>
-                        </a>`;
-            },
-        },
+        helpers: require('./helpers/handlebars'),
     }),
 );
 
 // override with the X-HTTP-Method-Override header in the request
 app.use(methodOverride('_method'));
 
+//config  handlebar
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 
